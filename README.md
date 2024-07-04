@@ -33,3 +33,5 @@ pnpm build
 ```sh
 pnpm lint
 ```
+# reservation-system
+ Reservation system for patient registration
