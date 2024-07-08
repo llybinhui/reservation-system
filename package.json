@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "pinia": "^2.1.7",
+    "vant": "^4.9.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
@@ -21,6 +22,8 @@
     "@vue/eslint-config-prettier": "^9.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "prettier": "^3.2.5",
     "vite": "^5.3.1"
   }

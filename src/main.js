@@ -1,14 +1,22 @@
 import './assets/main.css'
-
+import 'vant/lib/index.css'
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
-import router from './router'
+import { setupRouter, router } from './router'
+import { setupPinia } from './stores/index'
+import { setupPlugins } from './plugins/index'
+const setupApp = async () => {
+  const app = createApp(App)
 
-const app = createApp(App)
+  setupRouter(app)
 
-app.use(createPinia())
-app.use(router)
+  setupPinia(app)
 
-app.mount('#app')
+  setupPlugins(app)
+
+  await router.isReady()
+
+  app.mount('#app')
+}
+
+setupApp()
