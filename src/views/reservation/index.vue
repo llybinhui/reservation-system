@@ -2,6 +2,11 @@
 import { ref } from 'vue'
 import { showToast } from 'vant'
 import { showSuccessToast, showFailToast } from 'vant'
+import { useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const route = useRoute()
 
 const showDialog = ref(false)
 
@@ -50,41 +55,49 @@ const handleReservation = (item) => {
   }
 }
 
-const onSubmit = () => {}
+const handleGoMyReservation = () => {
+  router.push('/my-reservation')
+}
+
+const onSubmit = () => {
+   showDialog.value = false
+}
 </script>
 
 <template>
-  <header>我的预约</header>
-  <div class="content">
-    <div class="zhou">
-      <div class="zhouItem" :class="{ bechoose: zhouIndex == 0 }" @click="changeWeekIndex(0)">
-        本周
+  <div class="reservation-content">
+    <header @click="handleGoMyReservation">我的预约</header>
+    <div class="content">
+      <div class="zhou">
+        <div class="zhouItem" :class="{ bechoose: zhouIndex == 0 }" @click="changeWeekIndex(0)">
+          本周
+        </div>
+        <div class="zhouItem" :class="{ bechoose: zhouIndex == 1 }" @click="changeWeekIndex(1)">
+          下周
+        </div>
       </div>
-      <div class="zhouItem" :class="{ bechoose: zhouIndex == 1 }" @click="changeWeekIndex(1)">
-        下周
+      <div class="day">
+        <div
+          class="dayItem"
+          v-for="(item, index) in tableHeadList"
+          :key="index"
+          :class="{ bechoose: dayIndex == index }"
+          @click="dayIndex = index"
+        >
+          {{ item }}
+        </div>
       </div>
-    </div>
-    <div class="day">
-      <div
-        class="dayItem"
-        v-for="(item, index) in tableHeadList"
-        :key="index"
-        :class="{ bechoose: dayIndex == index }"
-        @click="dayIndex = index"
-      >
-        {{ item }}
+      <div class="tiemBox">
+        <van-cell
+          :title="item.time"
+          is-link
+          :class="item.can ? 'can-reservation' : ''"
+          :value="item.can ? '可预约' : '已约'"
+          v-for="(item, index) in timeList"
+          :key="index"
+          @click="handleReservation(item)"
+        />
       </div>
-    </div>
-    <div class="tiemBox">
-      <van-cell
-        :title="item.time"
-        is-link
-        :class="item.can ? 'can-reservation' : ''"
-        :value="item.can ? '可预约' : '已约'"
-        v-for="(item, index) in timeList"
-        :key="index"
-        @click="handleReservation(item)"
-      />
     </div>
   </div>
   <van-dialog
@@ -118,6 +131,15 @@ const onSubmit = () => {}
 </template>
 
 <style lang="less" scoped>
+
+
+.reservation-content{
+  padding: 0 12px;
+}
+header {
+  color: rgb(32, 201, 173);
+  margin: 12px 0;
+}
 .zhou {
   display: flex;
   height: 50px;

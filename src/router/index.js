@@ -5,13 +5,18 @@ export const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: () => import('../views/login/index.vue')
+    },
+    {
+      path: '/reservation',
       name: 'reservation',
       component: () => import('../views/reservation/index.vue')
     },
     {
-      path: '/',
-      name: 'login',
-      component: () => import('../views/login/index.vue')
+      path: '/my-reservation',
+      name: 'my-reservation',
+      component: () => import('../views/my-reservation/index.vue')
     }
   ]
 })
