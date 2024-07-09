@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { ref } from 'vue'
 import { showToast } from 'vant'
 import { showSuccessToast, showFailToast } from 'vant'
@@ -50,12 +50,11 @@ const handleReservation = (item) => {
   }
 }
 
-const onSubmit=()=>{
-
-}
+const onSubmit = () => {}
 </script>
 
 <template>
+  <header>我的预约</header>
   <div class="content">
     <div class="zhou">
       <div class="zhouItem" :class="{ bechoose: zhouIndex == 0 }" @click="changeWeekIndex(0)">
@@ -88,7 +87,12 @@ const onSubmit=()=>{
       />
     </div>
   </div>
-  <van-dialog v-model:show="showDialog" title="预约" :showConfirmButton="false" >
+  <van-dialog
+    v-model:show="showDialog"
+    title="预约"
+    :showConfirmButton="false"
+    :closeOnClickOverlay="true"
+  >
     <van-form @submit="onSubmit">
       <van-cell-group inset>
         <van-field
@@ -113,14 +117,7 @@ const onSubmit=()=>{
   </van-dialog>
 </template>
 
-
 <style lang="less" scoped>
-span {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .zhou {
   display: flex;
   height: 50px;
