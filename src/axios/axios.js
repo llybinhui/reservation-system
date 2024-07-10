@@ -9,7 +9,6 @@ export default class Ajax {
       code: -1,
       data: undefined,
       msg: '服务异常，请稍后重试',
-      message: '服务异常，请稍后重试',
       error: true
     }
 
@@ -20,7 +19,6 @@ export default class Ajax {
       // todo
       if (result.code === '0') {
         result.error = false
-        result.msg ??= result.message || ''
       } else {
         result.error = responseData || true
       }
@@ -28,11 +26,10 @@ export default class Ajax {
       if (typeof error?.responseData?.data === 'object') {
         result = error.responseData.data
       }
-      result.msg ??= error.message
+
       //请求失败(如404)、后端服务异常（如500 服务器/接口崩溃）
       result.error = error || true
     }
-    result.msg ??= result.message
 
     return result
   }

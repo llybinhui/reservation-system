@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { showToast } from 'vant'
 import { showSuccessToast, showFailToast } from 'vant'
 import { useRoute, useRouter } from 'vue-router'
+import { useForm } from '@/hooks/use-form'
 
 const router = useRouter()
 
@@ -16,9 +17,15 @@ const dayIndex = ref(0)
 
 const tableHeadList = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 
-const phoneNumber = ref()
-
-const username = ref()
+const {
+  phoneNumber,
+  username,
+  vanFormRef,
+  pattern,
+  loadingButton,
+  validatorMessage,
+  validateFormByConfirm
+} = useForm()
 
 const timeList = [
   {
@@ -60,7 +67,13 @@ const handleGoMyReservation = () => {
 }
 
 const onSubmit = () => {
-   showDialog.value = false
+  validateFormByConfirm(() => {
+    loadingButton.value = true
+    setTimeout(() => {
+      loadingButton.value = false
+      showDialog.value = false
+    }, 3000)
+  })
 }
 </script>
 
@@ -106,7 +119,7 @@ const onSubmit = () => {
     :showConfirmButton="false"
     :closeOnClickOverlay="true"
   >
-    <van-form @submit="onSubmit">
+    <van-form ref="vanFormRef">
       <van-cell-group inset>
         <van-field
           v-model="username"
@@ -120,20 +133,27 @@ const onSubmit = () => {
           name="手机号"
           label="手机号"
           placeholder="手机号"
-          :rules="[{ required: true, message: '请填写手机号' }]"
+          :rules="[{ pattern, message: validatorMessage, required: true }]"
         />
       </van-cell-group>
       <div style="margin: 16px">
-        <van-button round block type="primary" native-type="submit"> 提交 </van-button>
+        <van-button
+          round
+          block
+          type="primary"
+          native-type="submit"
+          @click="onSubmit"
+          :loading="loadingButton"
+        >
+          提交
+        </van-button>
       </div>
     </van-form>
   </van-dialog>
 </template>
 
 <style lang="less" scoped>
-
-
-.reservation-content{
+.reservation-content {
   padding: 0 12px;
 }
 header {
@@ -184,5 +204,8 @@ header {
 .bechoose {
   background-color: rgb(32, 201, 173);
   color: #fff;
+}
+
+@keyframes fadein {
 }
 </style>

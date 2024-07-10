@@ -31,8 +31,11 @@ const onLoad = () => {
 
 <template>
   <div class="my-reservation-content">
-    <header><van-icon name="arrow-left" @click="router.go(-1)" /> <span>我的预约</span> <span></span></header>
-     <div class="solt"></div>
+    <header>
+      <van-icon name="arrow-left" @click="router.go(-1)" /> <span>我的预约</span>
+      <span class="empty-box"></span>
+    </header>
+    <div class="placeholder-box"></div>
     <main>
       <van-list
         v-model:loading="loading"
@@ -48,10 +51,13 @@ const onLoad = () => {
 
 <style lang="less" scoped>
 .my-reservation-content {
-    position:relative;
-    .solt{
-         height: 50px;
-    }
+  position: relative;
+  .placeholder-box {
+    height: 50px;
+  }
+  .empty-box {
+    width: 20px;
+  }
   main {
     padding: 0 12px;
   }
@@ -63,12 +69,13 @@ header {
   font-size: 18px;
   border-bottom: 1px solid #eee;
   height: 50px;
-  padding: 12px 0;
-  margin: 0 12px;
+  padding: 12px 12px;
   position: fixed;
   top: 0px;
   left: 0;
   right: 0;
   z-index: 1;
+  background-color: #fff;
+  box-shadow: -5px -2px 5px rgba(0, 0, 0, 0.5);
 }
 </style>
